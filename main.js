@@ -10,6 +10,8 @@ async function main() {
   const app = express();
   const PORT = process.env.PORT;
   require("./src/config/mongoose.config");
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   swaggerDocSetUp(app);
   app.use(allRoutes);
   NotFoundHandler(app);
