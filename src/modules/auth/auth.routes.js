@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { AuthController } = require("./auth.controller");
 
-const router = Router;
+const router = Router();
 
 router.post("/sendOTP", AuthController.sendOTP);
 router.post("/checkOTP", AuthController.checkOTP);
