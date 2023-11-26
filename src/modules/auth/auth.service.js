@@ -31,7 +31,19 @@ class AuthService {
       return user();
     }
   }
-  async checkOTP() {}
+  async checkOTP(mobile, code) {
+    const user = await this.checkUserExist(mobile);
+    const now = new Date().getTime();
+    if (user?.otp?.expireIn < now)
+      throw new createHttpError.Unauthorized(AuthMessage.otpNotAccepted);
+    if (user?.otp?.code !== code)
+      throw new createHttpError.Unauthorized(AuthMessage.otpNotAccepted);
+  }
+  async checkUserExist(mobile) {
+    const user = await UserModel.findOne({ mobile });
+    if (!user) throw new createHttpError.NotFound(AuthMessage.NotFound);
+    return user;
+  }
 }
 
 module.exports = new AuthService();
