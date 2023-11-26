@@ -1,7 +1,7 @@
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
-const swaggerDocSetUp = (app) => {
+function swaggerDocSetUp(app) {
   const swaggerDocument = swaggerJSDoc({
     swaggerDefinition: {
       info: {
@@ -9,10 +9,10 @@ const swaggerDocSetUp = (app) => {
         version: "v.0.0.1",
       },
     },
-    apis: [],
+    apis: [process.cwd() + "/src/modules/**/*.swagger.js"],
   });
   const swagger = swaggerUi.setup(swaggerDocument, {});
   app.use("/swagger", swaggerUi.serve, swagger);
-};
+}
 
 module.exports = swaggerDocSetUp;

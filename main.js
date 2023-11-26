@@ -1,11 +1,11 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const swaggerDocSetUp = require("./src/config/swagger.config");
+const dotenv = require("dotenv");
 dotenv.config();
 
 async function main() {
-  const PORT = process.env.PORT;
   const app = express();
+  const PORT = process.env.PORT;
   require("./src/config/mongoose.config");
   swaggerDocSetUp(app);
   app.listen(PORT, () => {
