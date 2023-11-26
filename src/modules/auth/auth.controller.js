@@ -21,6 +21,14 @@ class AuthController {
   }
   async checkOTP(req, res, next) {
     try {
+      const { mobile, code } = req.body;
+      const user = await authService.checkOTP(mobile, code);
+
+      if (!user)
+        throw new createHttpError.Unauthorized(AuthMessage.otpNotAccepted);
+      return res
+        .status(200)
+        .json({ success: true, message: AuthMessage.logedIn });
     } catch (error) {
       next(error);
     }

@@ -38,6 +38,11 @@ class AuthService {
       throw new createHttpError.Unauthorized(AuthMessage.otpNotAccepted);
     if (user?.otp?.code !== code)
       throw new createHttpError.Unauthorized(AuthMessage.otpNotAccepted);
+    if (!user.verifiedMobile) {
+      user.verifiedMobile = true;
+      await user.save();
+    }
+    return user;
   }
   async checkUserExist(mobile) {
     const user = await UserModel.findOne({ mobile });
